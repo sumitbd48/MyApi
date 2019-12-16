@@ -49,7 +49,7 @@ public class RetrofitEmpActivity extends AppCompatActivity {
                 String salary = etSalary.getText().toString();
                 String age = etAge.getText().toString();
                 Employee employee = new Employee(0,name,salary,age);
-                addEmp(employee);
+                updateEmp('1',employee);
             }
         });
 
@@ -60,7 +60,7 @@ public class RetrofitEmpActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
         empInter = retrofit.create(EmpInter.class);
-        
+
 
     }
 
@@ -112,6 +112,22 @@ public class RetrofitEmpActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.d("Ex ",t.toString());
+            }
+        });
+    }
+
+    private void updateEmp(int id,Employee employee){
+        Call<Void> empUpdate = empInter.updateEmployee(id,employee);
+
+        empUpdate.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(RetrofitEmpActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.d("Ex",t.toString());
             }
         });
     }
