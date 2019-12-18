@@ -6,6 +6,7 @@ public class Flag {
     private String country;
     private String file;
 
+    String flag;
     public Flag(int id, String country, String file) {
         this.id = id;
         this.country = country;
