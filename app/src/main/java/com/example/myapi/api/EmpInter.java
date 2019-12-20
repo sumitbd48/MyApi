@@ -5,11 +5,14 @@ import com.example.myapi.model.Flag;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface EmpInter {
@@ -29,5 +32,12 @@ public interface EmpInter {
 
     @GET("singleflag/{id}")
     Call<Flag> getFlagById(@Path("id") int id);
+
+    @Multipart //for image
+    @POST("upload")
+    Call<Flag> uploadFlag(@Part MultipartBody.Part img); //image file data type MultipartBody
+
+    @POST ("addcountry")
+    Call<Void> addCountry(@Body Flag flag);
 
 }
