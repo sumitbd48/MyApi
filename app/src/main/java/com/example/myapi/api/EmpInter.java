@@ -8,6 +8,8 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -37,7 +39,9 @@ public interface EmpInter {
     @POST("upload")
     Call<Flag> uploadFlag(@Part MultipartBody.Part img); //image file data type MultipartBody
 
-    @POST ("addcountry")
-    Call<Void> addCountry(@Body Flag flag);
+    @FormUrlEncoded
+    @POST("addcountry")
+    Call<Void> addCountry(@Field("country")String c,
+                          @Field("file")String f);
 
 }

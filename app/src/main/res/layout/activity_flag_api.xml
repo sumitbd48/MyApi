@@ -24,11 +24,18 @@
         android:layout_gravity="center"
         android:text="Choose"/>
 
+
+    <EditText
+        android:id="@+id/etCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Country..."/>
+
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnAddCon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Add"/>
+        android:text="Add Country"/>
 
 </LinearLayout>

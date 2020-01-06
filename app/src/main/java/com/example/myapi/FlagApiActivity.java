@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,13 +38,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FlagApiActivity extends AppCompatActivity {
 
+    EditText editText;
     TextView textView;
     ImageView imageView;
     Retrofit retrofit;
     EmpInter empInter;
-    Button btnChoose, btnAdd;
+    Button btnChoose, btnAdd, btnAddCon;
     Uri uri;
     MultipartBody.Part image;
+    String file_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class FlagApiActivity extends AppCompatActivity {
         imageView = findViewById(R.id.ivFlag);
         btnChoose = findViewById(R.id.btnChoose);
         btnAdd = findViewById(R.id.btnAdd);
+        btnAddCon = findViewById(R.id.btnAddCon);
+        editText = findViewById(R.id.etCountry);
 
         getInstance();
 
@@ -69,11 +74,20 @@ public class FlagApiActivity extends AppCompatActivity {
             }
         });
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+//        btnAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                getImgReady();
+//            }
+//        });
+
+        btnAddCon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadImage(image);
-                getImgReady();
+                String c = editText.getText().toString();
+                addCountry(c,file_name);
             }
         });
     }
@@ -154,11 +168,28 @@ public class FlagApiActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Flag> call, Response<Flag> response) {
                 Toast.makeText(FlagApiActivity.this, response.body().getFile() +"Uploaded", Toast.LENGTH_SHORT).show();
+                file_name = response.body().getFile();
             }
 
             @Override
             public void onFailure(Call<Flag> call, Throwable t) {
                 Log.d("Api Ex",t.toString());
+            }
+        });
+    }
+
+    private void addCountry(String country, String file){
+        Call<Void> addCon = empInter.addCountry(country,file);
+
+        addCon.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Toast.makeText(FlagApiActivity.this, "Added ", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
             }
         });
     }
